@@ -1,4 +1,4 @@
-UnionFind [![GoDoc](https://godoc.org/github.com/pietv/unionfind?status.png)](https://godoc.org/github.com/pietv/unionfind)
+UnionFind [![GoDoc](https://godoc.org/github.com/pietv/unionfind?status.png)](https://godoc.org/github.com/pietv/unionfind) [![Build Status](https://drone.io/github.com/pietv/unionfind/status.png)](https://drone.io/github.com/pietv/unionfind/latest)
 =========
 
 This is an implementation of the UnionFind (disjoint-set) data structure, as described, for example,
