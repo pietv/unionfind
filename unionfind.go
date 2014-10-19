@@ -152,7 +152,7 @@ func (u UnionFind) prepareDump() []string {
 	return s
 }
 
-// String returns a text representation (dump) of a UnionFind data structure.
+// String returns a text representation of a UnionFind data structure.
 func (u UnionFind) String() string {
 	return strings.Join(u.prepareDump(), " ")
 }
