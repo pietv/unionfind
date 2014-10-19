@@ -48,7 +48,7 @@ func New() *UnionFind {
 }
 
 // MakeSet makes an independent set of one element.  If called with multiple
-// arguments, independent sets for each element are created.
+// arguments, an independent set for every element is made.
 func (u *UnionFind) MakeSet(a ...interface{}) {
 	if len(a) == 0 {
 		return
