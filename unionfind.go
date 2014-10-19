@@ -1,8 +1,8 @@
 // Package unionfind implements a UnionFind (disjoint-set) data structure,
 // as described, for example, here: http://algs4.cs.princeton.edu/15uf .
 //
-// The Union() and Connected() operations take O(log* N) "log-star" time,
-// that is close to O(1).
+// The Union() and Connected() operations take O(log* N) “log-star” time,
+// which is close to O(1).
 //
 // The MakeSet() operation when used with multiple arguments, union elements
 // in one set.
@@ -29,7 +29,7 @@ import (
 	"strings"
 )
 
-// Maintains sets and a number of connected components.
+// Maintains sets and a number of connected elements.
 type UnionFind struct {
 	sets  map[interface{}]*set
 	count int
@@ -69,8 +69,7 @@ func (u *UnionFind) MakeSet(a ...interface{}) {
 	}
 }
 
-// Union merges two independent sets as one.  The number of connected components
-// is decreased by one.
+// Union merges two independent sets as one. The number of sets is decreased by 1.
 func (u *UnionFind) Union(x, y interface{}) {
 	a := u.Find(x)
 	b := u.Find(y)
@@ -96,8 +95,8 @@ func (u *UnionFind) Union(x, y interface{}) {
 	u.count--
 }
 
-// Find returns the root element of the set.  The root element is the same for
-// all connected components.
+// Find returns the root element of the set. The root element is the same for
+// all elements within the same set.
 func (u UnionFind) Find(x interface{}) interface{} {
 	if _, ok := u.sets[x]; !ok {
 		panic(fmt.Sprintf("set %v hasn't been made yet with MakeSet", x))
@@ -114,7 +113,7 @@ func (u UnionFind) Find(x interface{}) interface{} {
 	return u.sets[x].parent
 }
 
-// Exists returns true if the set has already been made, false otherwise.
+// Exists returns true if the element belongs to any set, false otherwise.
 func (u UnionFind) Exists(x interface{}) bool {
 	if _, ok := u.sets[x]; ok {
 		return true
@@ -123,12 +122,13 @@ func (u UnionFind) Exists(x interface{}) bool {
 	}
 }
 
-// Connected returns true if the sets are connected, false otherwise.
+// Connected returns true if the elements belong to the same set,
+// false otherwise.
 func (u UnionFind) Connected(x, y interface{}) bool {
 	return u.Find(x) == u.Find(y)
 }
 
-// Count returns the number of connected components.
+// Count returns the number of independent sets.
 func (u UnionFind) Count() int {
 	return u.count
 }
@@ -146,8 +146,8 @@ func (u UnionFind) prepareDump() []string {
 	}
 
 	s := []string{}
-	for _, v := range m {
-		s = append(s, fmt.Sprintf("%v", v))
+	for _, e := range m {
+		s = append(s, fmt.Sprintf("%v", e))
 	}
 	return s
 }
