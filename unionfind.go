@@ -95,7 +95,15 @@ func (u *UnionFind) Union(x, y interface{}) {
 	u.count--
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 // Find returns the root element of the set. The root element is the same for
+=======
+// Find returns the root element of the set.  The root element is the same for
+>>>>>>> 7343bd6... Comments
+=======
+// Find returns the root element of the set. The root element is the same for
+>>>>>>> 2360783... ...
 // all elements within the same set.
 func (u UnionFind) Find(x interface{}) interface{} {
 	if _, ok := u.sets[x]; !ok {
@@ -128,7 +136,15 @@ func (u UnionFind) Connected(x, y interface{}) bool {
 	return u.Find(x) == u.Find(y)
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 // Count returns the number of independent sets.
+=======
+// Count returns the number of sets.
+>>>>>>> 7343bd6... Comments
+=======
+// Count returns the number of independent sets.
+>>>>>>> 48618ea... Comments
 func (u UnionFind) Count() int {
 	return u.count
 }
