@@ -4,7 +4,7 @@
 // The Union() and Connected() operations take O(log* N) “log-star” time,
 // which is close to O(1).
 //
-// The MakeSet() operation when used with multiple arguments, union elements
+// The MakeSet() operation when used with multiple arguments, unions elements
 // in one set.
 //
 // Basic usage:
