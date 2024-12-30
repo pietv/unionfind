@@ -9,19 +9,18 @@
 //
 // Basic usage:
 //
-//   u := unionfind.New()
+//	u := unionfind.New()
 //
-//   // Create sets.
-//   u.MakeSet(1, 2, 3, 4)
+//	// Create sets (optional).
+//	u.MakeSet(1, 2, 3, 4)
 //
-//   // Join them together.
-//   u.Union(1, 2)
-//   u.Union(3, 4)
-//   u.Union(2, 3)
+//	// Join them together.
+//	u.Union(1, 2)
+//	u.Union(3, 4)
+//	u.Union(2, 3)
 //
-//   // Check if they're connected.
-//   fmt.Println(u.Connected(1, 4))
-//
+//	// Check if they're connected.
+//	fmt.Println(u.Connected(1, 4))
 package unionfind
 
 import (
@@ -31,30 +30,30 @@ import (
 
 // Maintains sets and a number of connected elements.
 type UnionFind struct {
-	sets  map[interface{}]*set
+	sets  map[any]*set
 	count int
 }
 
 type set struct {
-	parent interface{}
+	parent any
 	rank   int
 }
 
 // New return an initialized UnionFind data structure.
 func New() *UnionFind {
 	return &UnionFind{
-		sets: make(map[interface{}]*set),
+		sets: make(map[any]*set),
 	}
 }
 
 // MakeSet makes an independent set of one element.  If called with multiple
 // arguments, an independent set for every element is made.
-func (u *UnionFind) MakeSet(a ...interface{}) {
-	if len(a) == 0 {
+func (u *UnionFind) MakeSet(x ...any) {
+	if len(x) == 0 {
 		return
 	}
 
-	for _, elem := range a {
+	for _, elem := range x {
 		if elem == nil {
 			continue
 		}
@@ -70,9 +69,20 @@ func (u *UnionFind) MakeSet(a ...interface{}) {
 }
 
 // Union merges two independent sets as one. The number of sets is decreased by 1.
-func (u *UnionFind) Union(x, y interface{}) {
-	a := u.Find(x)
-	b := u.Find(y)
+func (u *UnionFind) Union(x, y any) {
+	a, b := u.Find(x), u.Find(y)
+
+	// If the sets don't exist, create.
+	if a == nil {
+		u.MakeSet(x)
+
+		a = x
+	}
+	if b == nil {
+		u.MakeSet(y)
+
+		b = y
+	}
 
 	// Already connected.
 	if a == b {
@@ -97,9 +107,9 @@ func (u *UnionFind) Union(x, y interface{}) {
 
 // Find returns the root element of the set. The root element is the same for
 // all elements within the same set.
-func (u UnionFind) Find(x interface{}) interface{} {
+func (u UnionFind) Find(x any) any {
 	if _, ok := u.sets[x]; !ok {
-		panic(fmt.Sprintf("set %v hasn't been made yet with MakeSet", x))
+		return nil
 	}
 
 	// The root.
@@ -114,17 +124,16 @@ func (u UnionFind) Find(x interface{}) interface{} {
 }
 
 // Exists returns true if the element belongs to any set, false otherwise.
-func (u UnionFind) Exists(x interface{}) bool {
+func (u UnionFind) Exists(x any) bool {
 	if _, ok := u.sets[x]; ok {
 		return true
-	} else {
-		return false
 	}
+	return false
 }
 
 // Connected returns true if the elements belong to the same set,
 // false otherwise.
-func (u UnionFind) Connected(x, y interface{}) bool {
+func (u UnionFind) Connected(x, y any) bool {
 	return u.Find(x) == u.Find(y)
 }
 
@@ -134,13 +143,13 @@ func (u UnionFind) Count() int {
 }
 
 func (u UnionFind) prepareDump() []string {
-	m := make(map[interface{}][]interface{})
+	m := make(map[any][]any)
 
 	for k, v := range u.sets {
 		parent := u.Find(v.parent)
 
 		if _, ok := m[parent]; !ok {
-			m[parent] = []interface{}{}
+			m[parent] = []any{}
 		}
 		m[parent] = append(m[parent], k)
 	}

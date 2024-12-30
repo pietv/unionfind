@@ -122,14 +122,32 @@ func TestMakeSet(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
-	defer func() {
-		if r := recover(); r == nil {
-			t.Errorf("Find didn't panic when expected to")
-		}
-	}()
+	ds := New()
 
-	// Non-existent set.
-	_ = New().Find(1)
+	// Non-existent sets.
+	if ds.Find(1) != nil {
+		t.Errorf("1: expected set not to exist")
+	}
+	if ds.Find(2) != nil {
+		t.Errorf("2: expected set not to exist")
+	}
+}
+
+func TestUnion(t *testing.T) {
+	ds := New()
+
+	ds.Union(3, 4)
+
+	if ds.Find(3) != 3 {
+		t.Errorf("3: expected set to exist")
+	}
+	if ds.Find(4) != 3 {
+		t.Errorf("4: expected set to exist")
+	}
+
+	if ds.Connected(3, 4) != true {
+		t.Errorf("expected sets 3 and 4 to be connected")
+	}
 }
 
 func TestExists(t *testing.T) {
