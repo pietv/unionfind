@@ -1,9 +1,8 @@
 package unionfind_test
 
 import (
-	"math/rand"
+	"math/rand/v2"
 	"testing"
-	"time"
 
 	. "github.com/pietv/unionfind"
 )
@@ -13,10 +12,6 @@ type sets []interface{}
 type conn struct {
 	a, b interface{}
 	want bool
-}
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
 }
 
 var BasicTests = []struct {
@@ -208,8 +203,8 @@ func BenchmarkManyUnions(b *testing.B) {
 		u.MakeSet(n)
 		a = append(a, n)
 
-		n1 := a[rand.Intn(len(a))]
-		n2 := a[rand.Intn(len(a))]
+		n1 := a[rand.IntN(len(a))]
+		n2 := a[rand.IntN(len(a))]
 		b.StartTimer()
 		u.Union(n1, n2)
 		b.StopTimer()
@@ -227,13 +222,13 @@ func BenchmarkManyCheckConnects(b *testing.B) {
 		a = append(a, n)
 
 		// Random union.
-		n1 := a[rand.Intn(len(a))]
-		n2 := a[rand.Intn(len(a))]
+		n1 := a[rand.IntN(len(a))]
+		n2 := a[rand.IntN(len(a))]
 		u.Union(n1, n2)
 
 		// Random check.
-		n1 = a[rand.Intn(len(a))]
-		n2 = a[rand.Intn(len(a))]
+		n1 = a[rand.IntN(len(a))]
+		n2 = a[rand.IntN(len(a))]
 		b.StartTimer()
 		_ = u.Connected(n1, n2)
 		b.StopTimer()
@@ -247,12 +242,12 @@ func TestRandomShuffle10(t *testing.T) {
 		a, b := x[:1000], x[1000:]
 
 		u := New()
-		for i, _ := range a {
+		for i := range a {
 			u.MakeSet(a[i])
 			u.MakeSet(b[i])
 		}
 
-		for i, _ := range a[:len(a)-1] {
+		for i := range a[:len(a)-1] {
 			// Connect pairwise.
 			u.Union(a[i], a[i+1])
 			u.Union(b[i], b[i+1])
@@ -275,7 +270,7 @@ func TestRandomConnect10(t *testing.T) {
 		}
 
 		// Connect pairwise from the first to the last.
-		for i, _ := range x[:len(x)-1] {
+		for i := range x[:len(x)-1] {
 			u.Union(x[i], x[i+1])
 		}
 
