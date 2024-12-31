@@ -37,7 +37,7 @@ func (pq *PriorityQueue) Pop() interface{} {
 
 }
 
-func ExampleUnionFind() {
+func ExampleKruskal() {
 	//
 	//                                MST
 	//

@@ -96,7 +96,6 @@ func TestMakeSet(t *testing.T) {
 	u.MakeSet(nil)
 	if actual := u.Count(); actual != 0 {
 		t.Errorf("empty: got %v, want 0", actual)
-
 	}
 
 	// Multiple sets.
@@ -104,7 +103,6 @@ func TestMakeSet(t *testing.T) {
 	u.MakeSet(1, 2, 3)
 	if actual := u.Count(); actual != 3 {
 		t.Errorf("multiple: got %v, want 3", actual)
-
 	}
 
 	// Repeated sets.
