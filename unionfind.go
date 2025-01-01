@@ -28,7 +28,7 @@ import (
 	"strings"
 )
 
-// Maintains sets and a number of connected elements.
+// UnionFind maintains sets and a number of connected elements.
 type UnionFind struct {
 	sets  map[any]*set
 	count int
@@ -142,26 +142,23 @@ func (u UnionFind) Count() int {
 	return u.count
 }
 
-func (u UnionFind) prepareDump() []string {
+// String dumps the UnionFind structure as a string.
+func (u UnionFind) String() string {
 	m := make(map[any][]any)
 
-	for k, v := range u.sets {
-		parent := u.Find(v.parent)
+	// Aggregate sets by a common root.
+	for root, set := range u.sets {
+		parent := u.Find(set.parent)
 
 		if _, ok := m[parent]; !ok {
 			m[parent] = []any{}
 		}
-		m[parent] = append(m[parent], k)
+		m[parent] = append(m[parent], root)
 	}
 
-	s := []string{}
+	var s []string
 	for _, e := range m {
 		s = append(s, fmt.Sprintf("%v", e))
 	}
-	return s
-}
-
-// String returns a text representation of a UnionFind data structure.
-func (u UnionFind) String() string {
-	return strings.Join(u.prepareDump(), " ")
+	return strings.Join(s, " ")
 }
